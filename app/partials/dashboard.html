@@ -1,0 +1,36 @@
+<button class="btn btn-primary btn-lg" ng-click="create()" style="width: 200px">Добавить методику</button>
+<table class="table table-striped ">
+    <thead>
+    <tr>
+        <th class="col-lg-1">Код</th>
+        <th class="col-lg-3">Описание</th>
+        <th class="col-lg-1">Группы</th>
+        <th class="col-lg-2"></th>
+    </tr>
+    <tr>
+        <th><input type="text" class="form-control"></th>
+        <th><input type="text" class="form-control"></th>
+        <th><select class="form-control" ng-model="filterByGroup">
+            <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
+        </select></th>
+        <th><input type="text" class="form-control"></th>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr ng-repeat="method in methods">
+        <td>{{method.code}}</td>
+        <td>{{method.description}}</td>
+        <td>{{method.group}}</td>
+        <td>
+            <div class="btn-group-horizontal">
+                <button type="button" class="btn btn-info btn-md" ng-click="edit(method)"><span
+                        class="glyphicon glyphicon-pencil"></span></button>
+                <button type="button" class="btn btn-danger btn-md" ng-click="delete(method)"><span
+                        class="glyphicon glyphicon-remove"></span></button>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
