@@ -64,4 +64,29 @@ angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngS
                 }
             });
         };
-    });
+    })
+    .filter('mFilter', function () {
+        return function (array, state) {
+            if (state.code || state.description || state.group || state.type) {
+                return array.filter(function(o){
+                    let match = false;
+                    for(let key in state) {
+                        let filterValue = state[key];
+                        if (!filterValue) continue;
+
+                        let arrayValue = o[key];
+                        if (_.has(arrayValue, '_id')) {
+                            arrayValue = arrayValue._id;
+                        }
+                        if((arrayValue || '').toLowerCase().indexOf(filterValue.toLowerCase()) >= 0) {
+                            match = true;
+                            break;
+                        }
+                    }
+                    return match;
+
+                });
+            }
+            return array;
+        };
+    })

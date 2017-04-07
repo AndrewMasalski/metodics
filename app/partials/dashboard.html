@@ -4,24 +4,31 @@
     <tr>
         <th class="col-lg-1">Код</th>
         <th class="col-lg-3">Описание</th>
-        <th class="col-lg-1">Группы</th>
+        <th class="col-lg-1">Группа</th>
+        <th class="col-lg-1">Тип</th>
+        <th class="col-lg-2">Тэги</th>
         <th class="col-lg-2"></th>
     </tr>
     <tr>
-        <th><input type="text" class="form-control"></th>
-        <th><input type="text" class="form-control"></th>
-        <th><select class="form-control" ng-model="filterByGroup">
+        <th><input type="text" class="form-control" ng-model="filterState.code"></th>
+        <th><input type="text" class="form-control" ng-model="filterState.description"></th>
+        <th><select class="form-control" ng-model="filterState.group">
+            <option value=""></option>
             <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
         </select></th>
-        <th><input type="text" class="form-control"></th>
+        <th><input type="text" class="form-control" ng-model="filterState.type"></th>
+        <th><input type="text" class="form-control" ng-model="filterState.tags"></th>
+        <th></th>
     </tr>
 
     </thead>
     <tbody>
-    <tr ng-repeat="method in methods">
+    <tr ng-repeat="method in methods | mFilter : filterState">
         <td>{{method.code}}</td>
         <td>{{method.description}}</td>
-        <td>{{method.group}}</td>
+        <td>{{method.group.name}}</td>
+        <td>{{method.type}}</td>
+        <td>{{method.tags}}</td>
         <td>
             <div class="btn-group-horizontal">
                 <button type="button" class="btn btn-info btn-md" ng-click="edit(method)"><span

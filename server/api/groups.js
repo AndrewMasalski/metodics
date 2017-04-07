@@ -1,4 +1,3 @@
-let _ = require('lodash');
 let express = require('express');
 
 let router = express.Router();
