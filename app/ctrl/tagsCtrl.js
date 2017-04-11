@@ -2,7 +2,7 @@ angular.module('Methods')
     .controller('tagsCtrl', function($scope, api) {
         $scope.tags = {};
 
-        api.getTags()
+        api.tags.all()
             .then(function(methods) {
                 $scope.tags = methods;
             })

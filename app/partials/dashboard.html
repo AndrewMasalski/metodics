@@ -1,13 +1,14 @@
 <button class="btn btn-primary btn-lg" ng-click="create()" style="width: 200px">Добавить методику</button>
-<table class="table table-striped ">
+<table class="table table-striped">
     <thead>
     <tr>
         <th class="col-lg-1">Код</th>
         <th class="col-lg-3">Описание</th>
         <th class="col-lg-1">Группа</th>
         <th class="col-lg-1">Тип</th>
+        <th class="col-lg-1">Год</th>
         <th class="col-lg-2">Тэги</th>
-        <th class="col-lg-2"></th>
+        <th class="col-lg-1"></th>
     </tr>
     <tr>
         <th><input type="text" class="form-control" ng-model="filterState.code"></th>
@@ -17,6 +18,7 @@
             <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
         </select></th>
         <th><input type="text" class="form-control" ng-model="filterState.type"></th>
+        <th><input type="text" class="form-control" ng-model="filterState.year"></th>
         <th><input type="text" class="form-control" ng-model="filterState.tags"></th>
         <th></th>
     </tr>
@@ -28,19 +30,18 @@
         <td>{{method.description}}</td>
         <td>{{method.group.name}}</td>
         <td>{{method.type}}</td>
+        <td>{{method.year}}</td>
         <td>{{method.tags}}</td>
-        <td>
-            <div class="btn-group-horizontal">
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-info btn-sm" ng-click="edit(method)">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" ng-click="delete(method)">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
+        <td class="text-right text-nowrap">
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-info btn-sm" ng-click="edit(method)">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="delete(method)">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
         </td>
     </tr>
 

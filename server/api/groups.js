@@ -24,7 +24,7 @@ router.route('/groups')
 router.route('/groups/:id')
     .put(function(req, res) {
         let id = req.params.id;
-        let group = {id: req.params.id, name: req.body.name};
+        let group = {id: id, name: req.body.name};
         let resp = db.groups.update({_id: id}, group);
         res.json(resp);
     })

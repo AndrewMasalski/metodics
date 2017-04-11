@@ -30,5 +30,11 @@ angular.module('Methods')
         this.authenticated = function() {
             return !!this.getUser().session;
         };
+
+        this.update = function(user) {
+            $cookies.put(cookieName, JSON.stringify(user));
+            this.user = user;
+        };
+
         return this;
     });

@@ -2,6 +2,16 @@ angular.module('Methods')
     .controller('mainCtrl', function($scope, $rootScope, $http, $state, auth) {
         $scope.user = auth.getUser();
 
+        $scope.userInfo = function() {
+            if ($scope.user.firstname && $scope.user.lastname) {
+                return $scope.user.firstname + ' ' + $scope.user.lastname;
+            }
+            if ($scope.user.lastname) {
+                return $scope.user.lastname;
+            }
+            return $scope.user.username;
+        };
+
         $scope.login = function() {
             $scope.error = undefined;
             auth.signin($scope.user)

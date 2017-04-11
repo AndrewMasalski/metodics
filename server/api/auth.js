@@ -15,7 +15,7 @@ router.route('/login')
             res.status(400).send({message: "Неправильный пароль."});
             return;
         }
-        found.session = guid();
+        found.session = found.session || guid();
         res.send(found);
     });
 

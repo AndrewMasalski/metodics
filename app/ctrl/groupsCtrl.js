@@ -3,14 +3,14 @@ angular.module('Methods')
         $scope.new = '';
         $scope.groups = [];
 
-        api.getGroups()
+        api.groups.all()
             .then(function(groups) {
                 $scope.groups = groups;
             })
             .catch(onError);
 
         $scope.add = function() {
-            api.addGroup($scope.new)
+            api.groups.add($scope.new)
                 .then(function(res) {
                     $scope.new = '';
                     $scope.groups.push(res);
@@ -22,11 +22,11 @@ angular.module('Methods')
 
             const clone = _.clone(group);
             clone.name = value;
-            return api.updateGroup(clone);
+            return api.groups.save(clone);
         };
 
         $scope.delete = function(group) {
-            api.deleteGroup(group)
+            api.groups.delete(group)
                 .then(function() {
                     _.remove($scope.groups, {_id: group._id})
                 })

@@ -7,7 +7,6 @@
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../node_modules/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-    <link href="../vendor/angular-editable-text.min.css" rel="stylesheet">
     <script src="../node_modules/lodash/lodash.min.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -43,7 +42,7 @@
                 <li ui-sref-active="active" class="item"><a ui-sref="tags">Тэги</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-show="isLoggedIn()">
-                <li ui-sref-active="active" class="item"><a ui-sref="users({userName: user.username})">{{user.username}}</a></li>
+                <li ui-sref-active="active" class="item"><a ui-sref="users({userName: user.username})">{{userInfo()}}</a></li>
                 <li class="item"><a href ng-click="logout()">Выйти</a></li>
             </ul>
         </div>
