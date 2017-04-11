@@ -1,8 +1,39 @@
-<div class="row">
-    <input type="text" name="name" ng-model="new" class="input-lg col-md-offset-2" style="width: 50%" m-enter="add()">
-    <button type="button" class="btn btn-info btn-md" ng-click="add()"><span
-            class="glyphicon glyphicon-plus"></span></button>
-    <h4 ng-repeat="gr in groups" class="col-md-offset-2">{{gr.name}}</h4>
+<div>
+    <div class="form-group form-inline">
+        <input type="text"
+               ng-model="new"
+               placeholder="Новый раздел"
+               class="input-lg"
+               style="width: 50%"
+               m-enter="add()">
+        <button type="button" class="btn btn-info btn-md" ng-click="add()">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+    <div class="panel panel-default" style="width: 53%">
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="gr in groups"
+                e-required
+                e-style="width: 200%"
+                editable-text="gr.name"
+                e-form="textBtnForm"
+                onbeforesave="save(gr, $data)">
+                <td>
+                    <span class="label label-info">{{gr.count}}</span> {{gr.name || 'пусто'}}
+                </td>
+                <td class="text-right text-nowrap">
+                    <button type="button" class="btn btn-info btn-sm" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="delete(gr)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

@@ -1,5 +1,5 @@
 angular.module('Methods')
-    .controller('mainCtrl', function($scope, $rootScope, $http, $state, ngToast, auth) {
+    .controller('mainCtrl', function($scope, $rootScope, $http, $state, auth) {
         $scope.user = auth.getUser();
 
         $scope.login = function() {

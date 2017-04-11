@@ -1,9 +1,6 @@
-angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngSanitize', 'ngToast', 'angularModalService', 'ngAnimate'])
-    .config(function($stateProvider, $urlRouterProvider, ngToastProvider) {
+angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngSanitize', 'ngAnimate', 'xeditable'])
+    .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/dashboard");
-        ngToastProvider.configure({
-            animation: 'slide' // or 'fade'
-        });
 
         console.log('app.config');
         $stateProvider
@@ -38,8 +35,10 @@ angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngS
                 controller: 'tagsCtrl'
             })
     })
-    .run(function($rootScope, auth, $state) {
+    .run(function($rootScope, $state, auth, editableOptions, editableThemes) {
         console.log("app.run");
+        editableOptions.theme = 'bs3';
+
         $rootScope.isAppStarted = false;
 
         $rootScope.$on("$stateChangeStart",

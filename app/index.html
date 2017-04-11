@@ -3,10 +3,13 @@
 
 <head>
     <title>Каталог методик</title>
+    <style>div[ng-app] { margin: 10px; font-size: 16px; line-height: 2; }</style>
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../node_modules/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <link href="../vendor/angular-editable-text.min.css" rel="stylesheet">
     <script src="../node_modules/lodash/lodash.min.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="../node_modules/ng-toast/dist/ngToast-animations.min.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../node_modules/angular/angular.min.js"></script>
     <script src="../node_modules/angular-cookies/angular-cookies.min.js"></script>
@@ -14,7 +17,7 @@
     <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
     <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="../node_modules/angular-modal-service/dst/angular-modal-service.min.js"></script>
-    <script src="../node_modules/ng-toast/dist/ngToast.min.js"></script>
+    <script src="../node_modules/angular-xeditable/dist/js/xeditable.js"></script>
 
     <script src="app.js"></script>
     <script src="services/authService.js"></script>
@@ -27,9 +30,8 @@
     <script src="ctrl/methodDetailsCtrl.js"></script>
 </head>
 
-<body ng-app="Methods">
-<toast></toast>
-<div ng-controller="mainCtrl">
+<body>
+<div ng-app="Methods" ng-controller="mainCtrl">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -37,7 +39,7 @@
             </div>
             <ul class="nav navbar-nav" ng-show="isLoggedIn()">
                 <li ui-sref-active="active" class="item"><a ui-sref="dashboard">Главная</a></li>
-                <li ui-sref-active="active" class="item"><a ui-sref="groups">Группы</a></li>
+                <li ui-sref-active="active" class="item"><a ui-sref="groups">Разделы</a></li>
                 <li ui-sref-active="active" class="item"><a ui-sref="tags">Тэги</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" ng-show="isLoggedIn()">

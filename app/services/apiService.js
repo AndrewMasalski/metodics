@@ -56,6 +56,20 @@ angular.module('Methods')
                 });
         };
 
+        this.updateGroup = function(group) {
+            return $http.put(server + 'groups/' + group._id, group)
+                .then(function(response) {
+                    return response.data;
+                });
+        };
+
+        this.deleteGroup = function(group) {
+            return $http.delete(server + 'groups/' + group._id)
+                .then(function(response) {
+                    return response.data;
+                });
+        };
+
 
         return this;
     });

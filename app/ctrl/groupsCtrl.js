@@ -17,6 +17,21 @@ angular.module('Methods')
                 })
         };
 
+        $scope.save = function(group, value) {
+            if (group.name === value) return true;
+
+            const clone = _.clone(group);
+            clone.name = value;
+            return api.updateGroup(clone);
+        };
+
+        $scope.delete = function(group) {
+            api.deleteGroup(group)
+                .then(function() {
+                    _.remove($scope.groups, {_id: group._id})
+                })
+        };
+
         function onError(err) {
             $scope.error = err;
         }

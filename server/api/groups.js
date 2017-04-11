@@ -1,23 +1,31 @@
+var _ = require('lodash');
 let express = require('express');
 
 let router = express.Router();
 
 router.route('/groups')
     .get(function(req, res) {
-        res.send(db.groups.find());
+        let methods = db.methods.find();
+        let groups = db.groups.find();
+        _.forEach(groups, function(gr) {
+            gr.count = _.countBy(methods, {group: gr._id}).true || 0;
+        });
+        res.send(groups);
     })
 
     .post(function(req, res) {
         let group = {name: req.body.name};
         console.log('adding group: ', group);
         let resp = db.groups.save(group);
+        group.count = 0;
         res.send(resp);
     });
 
 router.route('/groups/:id')
     .put(function(req, res) {
         let id = req.params.id;
-        let resp = db.groups.update({_id: id}, req.body);
+        let group = {id: req.params.id, name: req.body.name};
+        let resp = db.groups.update({_id: id}, group);
         res.json(resp);
     })
 

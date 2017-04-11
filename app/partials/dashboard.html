@@ -31,10 +31,15 @@
         <td>{{method.tags}}</td>
         <td>
             <div class="btn-group-horizontal">
-                <button type="button" class="btn btn-info btn-md" ng-click="edit(method)"><span
-                        class="glyphicon glyphicon-pencil"></span></button>
-                <button type="button" class="btn btn-danger btn-md" ng-click="delete(method)"><span
-                        class="glyphicon glyphicon-remove"></span></button>
+                <button type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-info btn-sm" ng-click="edit(method)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" ng-click="delete(method)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </div>
         </td>
     </tr>
