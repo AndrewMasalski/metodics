@@ -31,7 +31,10 @@
         <td>{{method.group.name}}</td>
         <td>{{method.type}}</td>
         <td>{{method.year}}</td>
-        <td>{{method.tags}}</td>
+        <td>
+            <span style="margin-left: 5px" class="label label-info" ng-repeat="tag in method.tags">{{tag.text}}</span>
+            <!--<tags-input ng-model="method.tags"><auto-complete source="tags"></auto-complete></tags-input>-->
+        </td>
         <td class="text-right text-nowrap">
             <button type="button" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>

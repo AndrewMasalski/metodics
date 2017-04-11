@@ -7,10 +7,11 @@ angular.module('Methods')
         $scope.filterByGroup = undefined;
         $scope.newMethod = {};
 
-        Promise.all([api.methods.all(), api.groups.all()])
+        Promise.all([api.methods.all(), api.groups.all(), api.tags.all()])
             .then(function(res) {
                 $scope.methods = res[0] || [];
                 $scope.groups = res[1] || [];
+                $scope.tags = res[2] || [];
             })
             .catch(onError);
 
@@ -25,7 +26,8 @@ angular.module('Methods')
                 inputs: {
                     action: action,
                     method: data,
-                    groups: $scope.groups
+                    groups: $scope.groups,
+                    tags: $scope.tags
                 }
             };
             ModalService.showModal(modalOptions)

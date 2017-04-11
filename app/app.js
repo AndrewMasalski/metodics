@@ -1,4 +1,4 @@
-angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngSanitize', 'ngAnimate', 'xeditable'])
+angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngSanitize', 'ngAnimate', 'xeditable', 'ngTagsInput', 'ngTagCloud'])
     .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/dashboard");
 

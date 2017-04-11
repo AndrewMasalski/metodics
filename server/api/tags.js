@@ -1,11 +1,24 @@
 let express = require('express');
+let _ = require('lodash');
 
 let router = express.Router();
 
 router.route('/tags')
     .get(function(req, res) {
-        let configs = db.tags.find();
-        res.send(configs);
+        let tags = db.tags.find();
+        let methods = db.methods.find();
+        let allIds = [];
+        _.forEach(methods, function(method) {
+            _.forEach(method.tags, function(tag) {
+                allIds.push(tag)
+            })
+        });
+        _.forEach(tags, function(tag) {
+            tag.weigth = _.filter(allIds, function(id) {
+                return tag._id === id;
+            }).length;
+        });
+        res.send(tags);
     })
 
     .post(function(req, res) {

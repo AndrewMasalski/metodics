@@ -1,5 +1,6 @@
 angular.module('Methods')
-    .controller('methodDetailsController', function($scope, close, action, method, groups) {
+    .controller('methodDetailsController', function($scope, close, action, method, groups, tags) {
+        $scope.tags = tags;
         $scope.groups = groups;
         $scope.method = method || {};
         $scope.action = action;
