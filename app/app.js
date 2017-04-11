@@ -50,12 +50,12 @@ angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngS
             });
 
     })
-    .directive('mEnter', function () {
-        return function (scope, element, attrs) {
-            element.bind("keydown keypress", function (event) {
+    .directive('mEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
                 let key = typeof event.which === "undefined" ? event.keyCode : event.which;
-                if(key === 13) {
-                    scope.$apply(function (){
+                if (key === 13) {
+                    scope.$apply(function() {
                         scope.$eval(attrs.mEnter);
                     });
 
@@ -64,28 +64,43 @@ angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngS
             });
         };
     })
-    .filter('mFilter', function () {
-        return function (array, state) {
-            if (state.code || state.description || state.group || state.type) {
-                return array.filter(function(o){
-                    let match = false;
-                    for(let key in state) {
-                        let filterValue = state[key];
-                        if (!filterValue) continue;
+    .filter('mFilter', function() {
+        return function(array, state) {
+            if (!(state.code || state.description || state.group || state.type || state.tags || state.year))
+                return array;
 
-                        let arrayValue = o[key];
-                        if (_.has(arrayValue, '_id')) {
-                            arrayValue = arrayValue._id;
-                        }
-                        if((arrayValue || '').toLowerCase().indexOf(filterValue.toLowerCase()) >= 0) {
-                            match = true;
-                            break;
-                        }
-                    }
-                    return match;
-
-                });
+            function compareStrings(source, filter) {
+                return ((source || '').toLowerCase().indexOf((filter || '').toLowerCase()) >= 0);
             }
-            return array;
+
+            return array.filter(function(o) {
+                let matches = [];
+                let match;
+                if (!!state.code) {
+                    match = compareStrings(o.code, state.code);
+                    matches.push(match);
+                }
+                if (!!state.description) {
+                    match = compareStrings(o.description, state.description);
+                    matches.push(match);
+                }
+                if (!!state.type) {
+                    match = compareStrings(o.type, state.type);
+                    matches.push(match);
+                }
+                if (!!state.year) {
+                    match = compareStrings(o.year, state.year);
+                    matches.push(match);
+                }
+                if (!!state.group) {
+                    match = compareStrings(o.group._id, state.group);
+                    matches.push(match);
+                }
+                if (state.tags.length > 0) {
+                    match = _.intersectionBy((o.tags || []), state.tags, '_id').length > 0;
+                    matches.push(match);
+                }
+                return _.every(matches, function(m) { return m });
+            });
         };
-    })
+    });

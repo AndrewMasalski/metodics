@@ -1,10 +1,9 @@
 angular.module('Methods')
     .controller('dashboardCtrl', function($scope, ModalService, api) {
-        $scope.filterState = {};
+        $scope.filterState = { tags: [] };
         $scope.methods = [];
         $scope.groups = [];
         $scope.tags = [];
-        $scope.filterByGroup = undefined;
         $scope.newMethod = {};
 
         Promise.all([api.methods.all(), api.groups.all(), api.tags.all()])
@@ -57,8 +56,7 @@ angular.module('Methods')
             ask('Удалить', method, api.methods.delete);
         };
 
-        $scope.compare = function(a, b){
-            console.log(a);
-            console.log(b);
+        $scope.addTagFilter = function(tag){
+            $scope.filterState.tags.push(tag);
         }
     });

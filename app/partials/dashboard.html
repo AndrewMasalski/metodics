@@ -19,7 +19,12 @@
         </select></th>
         <th><input type="text" class="form-control" ng-model="filterState.type"></th>
         <th><input type="text" class="form-control" ng-model="filterState.year"></th>
-        <th><input type="text" class="form-control" ng-model="filterState.tags"></th>
+        <th>
+            <!--<input type="text" class="form-control" ng-model="filterState.tags">-->
+            <tags-input ng-model="filterState.tags">
+                <auto-complete source="tags"></auto-complete>
+            </tags-input>
+        </th>
         <th></th>
     </tr>
 
@@ -32,7 +37,7 @@
         <td>{{method.type}}</td>
         <td>{{method.year}}</td>
         <td>
-            <span style="margin-left: 5px" class="label label-info" ng-repeat="tag in method.tags">{{tag.text}}</span>
+            <span style="margin-left: 5px" class="label label-info" ng-click="addTagFilter(tag)" ng-repeat="tag in method.tags">{{tag.text}}</span>
             <!--<tags-input ng-model="method.tags"><auto-complete source="tags"></auto-complete></tags-input>-->
         </td>
         <td class="text-right text-nowrap">
