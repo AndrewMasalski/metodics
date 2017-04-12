@@ -46,6 +46,11 @@
                                 <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label>Заметки</label>
+                            <input type="text" name="type" class="form-control" ng-model="method.notes">
+                        </div>
                     </form>
                 </fieldset>
             </div>
