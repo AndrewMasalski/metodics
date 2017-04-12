@@ -1,10 +1,14 @@
 let fs = require('fs');
 let _ = require('lodash');
+let db = require('diskdb');
+db.connect('../import', ['methods']);
+
+
 const filePath = 'data.txt';
 let groupRegex = /^(\d\.)[^\d](.*)/;
 let tagRegex = /^(\d\.\d)\.\s?(.*)/;
 let typeRegex = /[\s+|.|-](инструкция по применению|инструкция|мви|письмо|методика|методические рекомендации|методические указания|руководство|технические условия|ту|анализ|санитарные нормы|санитарные требования|санитарные правила)\s+/;
-
+let yearRegex = /\d\d\.\d\d.(\d\d\d\d)/;
 let res = {
     groups: []
 };
@@ -22,7 +26,7 @@ function getTags(strs) {
     const tags = require('../db/tags.json');
     let res = [];
     _.forEach(strs, function(text) {
-        var found = _.find(tags, {text: text});
+        let found = _.find(tags, {text: text});
         if (found) {
             res.push(found._id);
         }
@@ -32,8 +36,7 @@ function getTags(strs) {
 lines.forEach(function(line, index) {
     line = _.trim(line.toLowerCase());
     if (groupRegex.test(line)) {
-        let gr = getGroup(res.groups.length);
-        currentGroup = gr;
+        currentGroup = getGroup(res.groups.length);
         if (currentGroup !== 'start') {
             res.groups.push(currentGroup);
         }
@@ -54,17 +57,20 @@ lines.forEach(function(line, index) {
             currentTag.methods = [];
         }
         if (line !== '') {
-            let type;
+            let type, year;
             if (typeRegex.test(line)) {
-                let matches = typeRegex.exec(line);
-                type = matches[1];
+                type = typeRegex.exec(line)[1];
+            }
+            if (yearRegex.test(line)) {
+                year = yearRegex.exec(line)[1];
             }
 
             let method = {
                 description: line.replace(/-\s+/, ''),
                 group: currentGroup._id,
                 type: type,
-                tags: getTags(currentTag.splitted)
+                tags: getTags(currentTag.splitted),
+                year: year
             };
             currentTag.methods.push(method);
             methods.push(line);
@@ -73,6 +79,13 @@ lines.forEach(function(line, index) {
 
 });
 
-fs.writeFileSync('./tmp/data.json', JSON.stringify(res, null, 2));
-fs.writeFileSync('./tmp/methods.json', methods.join('\r\n'));
-fs.writeFileSync('./tmp/tags.json', _.uniq(tags).join('\r\n'));
+_.forEach(res.groups, function(g) {
+    _.forEach(g.tags, function(t) {
+        _.forEach(t.methods, function(m) {
+            let resp = db.methods.save(m);
+        })
+    })
+});
+//fs.writeFileSync('../import/res.json', JSON.stringify(res, null, 2));
+//fs.writeFileSync('../import/lines.json', methods.join('\r\n'));
+//fs.writeFileSync('../import/tags.json', _.uniq(tags).join('\r\n'));

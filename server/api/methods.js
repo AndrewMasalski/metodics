@@ -8,7 +8,9 @@ router.route('/methods')
         let methods = db.methods.find();
         let groups = db.groups.find();
         let tags = db.tags.find();
-        for (let i = 0; i < methods.length; i++) {
+        let top = req.params.top || 25;
+        let query = [];
+        for (let i = 0; i < top; i++) {
             let method = methods[i];
             if (!!method.group) {
                 let found = _.find(groups, {_id: method.group});
@@ -24,8 +26,9 @@ router.route('/methods')
                 }
             });
             method.tags = tagIds;
+            query.push(method);
         }
-        res.send(methods);
+        res.send(query);
     })
     .post(function(req, res) {
         let method = req.body;

@@ -2,8 +2,7 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class="col-lg-1">Код</th>
-        <th class="col-lg-3">Описание</th>
+        <th class="col-lg-4">Описание</th>
         <th class="col-lg-1">Группа</th>
         <th class="col-lg-1">Тип</th>
         <th class="col-lg-1">Год</th>
@@ -11,7 +10,6 @@
         <th class="col-lg-1"></th>
     </tr>
     <tr>
-        <th><input type="text" class="form-control" ng-model="filterState.code"></th>
         <th><input type="text" class="form-control" ng-model="filterState.description"></th>
         <th><select class="form-control" ng-model="filterState.group">
             <option value=""></option>
@@ -20,7 +18,6 @@
         <th><input type="text" class="form-control" ng-model="filterState.type"></th>
         <th><input type="text" class="form-control" ng-model="filterState.year"></th>
         <th>
-            <!--<input type="text" class="form-control" ng-model="filterState.tags">-->
             <tags-input ng-model="filterState.tags">
                 <auto-complete source="tags"></auto-complete>
             </tags-input>
@@ -31,7 +28,6 @@
     </thead>
     <tbody>
     <tr ng-repeat="method in methods | mFilter : filterState">
-        <td>{{method.code}}</td>
         <td>{{method.description}}</td>
         <td>{{method.group.name}}</td>
         <td>{{method.type}}</td>
