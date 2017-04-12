@@ -4,3 +4,4 @@ dist
 *.iml
 /db/
 /npm-debug.log
+/parser/tmp/
