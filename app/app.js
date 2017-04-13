@@ -38,7 +38,7 @@ angular.module('Methods', ngmodules)
                 controller: 'groupsCtrl'
             })
             .state('tags', {
-                url: "/tags/:id",
+                url: "/tags:id",
                 templateUrl: "partials/tags.html",
                 data: {requireLogin: true},
                 controller: 'tagsCtrl'

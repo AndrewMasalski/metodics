@@ -1,15 +1,10 @@
 angular.module('Methods')
-    .controller('tagsCtrl', function($scope, api) {
+    .controller('tagsCtrl', function($scope, $state, api) {
         $scope.tags = [];
         $scope.new = '';
 
         api.tags.all()
             .then(function(tags) {
-                _.forEach(tags, function(t) {
-//                    t.link = t.link || "tags({'id': '" + t._id + "'}";
-                    t.link = t.link || "#!/tags/" + t._id;
-                    console.log(t.link);
-                });
                 $scope.tags = tags;
             })
             .catch(onError);
