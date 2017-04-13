@@ -1,5 +1,5 @@
 <button class="btn btn-primary btn-lg" ng-click="create()" style="width: 200px">Добавить методику</button>
-<table class="table table-striped">
+<table class="table table-striped" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
     <thead>
     <tr>
         <th class="col-lg-4">Описание</th>
@@ -33,9 +33,9 @@
         <td>{{method.type}}</td>
         <td>{{method.year}}</td>
         <td>
-            <a href="#" style="margin-left: 5px" class="label label-info" ng-repeat="tag in method.tags" ng-click="addTagFilter(tag)">{{tag.text}}</a>
-                <!--<span style="margin-left: 5px" class="label label-info" ng-repeat="tag in method.tags">{{tag.text}}</span>-->
-            <!--<tags-input ng-model="method.tags"><auto-complete source="tags"></auto-complete></tags-input>-->
+            <a href="#" style="margin-left: 5px" class="label label-info" ng-repeat="tag in method.tags" ng-click="addTagFilter(tag)">
+                {{tag.text}}
+            </a>
         </td>
         <td class="text-right text-nowrap">
             <button type="button" class="btn btn-default btn-sm">
@@ -52,3 +52,4 @@
 
     </tbody>
 </table>
+<div data-ng-show="error" class="alert alert-danger"><strong>Error:</strong> {{error}}</div>

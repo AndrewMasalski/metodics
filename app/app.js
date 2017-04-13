@@ -6,7 +6,8 @@ let ngmodules = [
     'ngAnimate',
     'xeditable',
     'ngTagsInput',
-    'blockUI'
+    'blockUI',
+    'infinite-scroll'
 ];
 angular.module('Methods', ngmodules)
     .config(function($stateProvider, $urlRouterProvider, blockUIConfig) {

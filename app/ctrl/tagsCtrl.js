@@ -4,9 +4,9 @@ angular.module('Methods')
         $scope.new = '';
 
         block.toggle();
-        api.tags.all()
+        api.tags.many()
             .then(function(tags) {
-                $scope.tags = tags;
+                $scope.tags = tags.results;
                 block.toggle();
             })
             .catch(onError);

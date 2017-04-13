@@ -4,9 +4,9 @@ angular.module('Methods')
         $scope.groups = [];
 
         block.toggle();
-        api.groups.all()
+        api.groups.many()
             .then(function(groups) {
-                $scope.groups = groups;
+                $scope.groups = groups.results;
                 block.toggle();
             })
             .catch(onError);

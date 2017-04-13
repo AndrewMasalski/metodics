@@ -9,6 +9,8 @@ angular.module('Methods')
         $scope.groups = [];
         $scope.tags = [];
         $scope.newMethod = {};
+        $scope.next = undefined;
+        $scope.busy = true;
 
         block.toggle();
         api.loadAll()
@@ -16,15 +18,17 @@ angular.module('Methods')
                 $scope.methods = res.methods;
                 $scope.groups = res.groups;
                 $scope.tags = res.tags;
+                $scope.next = res.next;
                 let tagFromParam = _.find(res.tags, {_id: $stateParams.tag});
                 if (tagFromParam) {
                     $scope.filterState.tags.push(tagFromParam);
                 }
                 block.toggle();
+                $scope.busy = false;
             })
             .catch(onError);
 
-        function ask(action, data, callback) {
+        function ask(action, data, cb) {
             let modalOptions = {
                 templateUrl: 'partials/methodDetails.html',
                 controller: "methodDetailsController",
@@ -40,11 +44,30 @@ angular.module('Methods')
                     modal.element.modal();
                     modal.close.then(function(result) {
                         if (result) {
-                            callback(result).catch(onError)
+                            cb(result).catch(onError)
                         }
                     });
                 })
         }
+
+        $scope.nextPage = function() {
+            if ($scope.next === undefined) return;
+
+            $scope.busy = true;
+            api.methods.next($scope.next)
+                .then(function(res) {
+                    angular.forEach(res.results, function(method) {
+                        $scope.methods.push(method);
+                    });
+                    $scope.next = res.$next;
+                    $scope.busy = false;
+                })
+                .catch(function(err) {
+                    $scope.next = undefined;
+                    console.log(err);
+                    $scope.error = err;
+                })
+        };
 
         $scope.create = function() {
             $scope.error = undefined;
