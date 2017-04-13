@@ -10,7 +10,7 @@ router.route('/groups')
         _.forEach(groups, function(gr) {
             gr.count = _.countBy(methods, {group: gr._id}).true || 0;
         });
-        res.send(groups);
+        res.send({ results: groups });
     })
 
     .post(function(req, res) {

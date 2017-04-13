@@ -1,22 +1,20 @@
 angular.module('Methods')
-    .controller('dashboardCtrl', function($scope, ModalService, api) {
-        $scope.filterState = { tags: [] };
+    .controller('dashboardCtrl', function($scope, ModalService, api, $q, block) {
+        $scope.filterState = {tags: []};
         $scope.methods = [];
         $scope.groups = [];
         $scope.tags = [];
         $scope.newMethod = {};
 
-        Promise.all([api.methods.all(), api.groups.all(), api.tags.all()])
+        block.toggle();
+        api.loadAll()
             .then(function(res) {
-                $scope.methods = res[0] || [];
-                $scope.groups = res[1] || [];
-                $scope.tags = res[2] || [];
+                $scope.methods = res.methods;
+                $scope.groups = res.groups;
+                $scope.tags = res.tags;
+                block.toggle();
             })
             .catch(onError);
-
-        function onError(err) {
-            $scope.error = err;
-        }
 
         function ask(action, data, callback) {
             let modalOptions = {
@@ -34,7 +32,7 @@ angular.module('Methods')
                     modal.element.modal();
                     modal.close.then(function(result) {
                         if (result) {
-                            callback(result)
+                            callback(result).catch(onError)
                         }
                     });
                 })
@@ -56,7 +54,13 @@ angular.module('Methods')
             ask('Удалить', method, api.methods.delete);
         };
 
-        $scope.addTagFilter = function(tag){
+        $scope.addTagFilter = function(tag) {
             $scope.filterState.tags.push(tag);
+        };
+
+        function onError(err) {
+            $scope.error = err;
+            block.toggle();
         }
+
     });

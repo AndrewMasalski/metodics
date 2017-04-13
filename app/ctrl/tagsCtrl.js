@@ -1,11 +1,13 @@
 angular.module('Methods')
-    .controller('tagsCtrl', function($scope, $state, api) {
+    .controller('tagsCtrl', function($scope, $state, api, block) {
         $scope.tags = [];
         $scope.new = '';
 
+        block.toggle();
         api.tags.all()
             .then(function(tags) {
                 $scope.tags = tags;
+                block.toggle();
             })
             .catch(onError);
 
@@ -35,5 +37,6 @@ angular.module('Methods')
 
         function onError(err) {
             $scope.error = err;
+            block.toggle();
         }
     });

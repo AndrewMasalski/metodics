@@ -5,13 +5,18 @@ let ngmodules = [
     'ngSanitize',
     'ngAnimate',
     'xeditable',
-    'ngTagsInput'
+    'ngTagsInput',
+    'blockUI'
 ];
 angular.module('Methods', ngmodules)
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider, blockUIConfig) {
         $urlRouterProvider.otherwise("/dashboard");
 
         console.log('app.config');
+
+        blockUIConfig.message = 'загрузка...';
+        blockUIConfig.delay = 200;
+
         $stateProvider
             .state('auth', {
                 url: "/auth",

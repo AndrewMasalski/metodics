@@ -18,7 +18,7 @@ router.route('/tags')
                 return tag._id === id;
             }).length;
         });
-        res.send(tags);
+        res.send({results: tags});
     })
 
     .post(function(req, res) {

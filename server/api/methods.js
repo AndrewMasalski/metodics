@@ -1,3 +1,4 @@
+var url = require('url');
 let _ = require('lodash');
 let express = require('express');
 
@@ -8,10 +9,12 @@ router.route('/methods')
         let methods = db.methods.find();
         let groups = db.groups.find();
         let tags = db.tags.find();
-        let top = req.params.top || 25;
+        let skip = Number(req.query.skip || 0);
+        let top = Number(req.query.top || 25);
         let query = [];
-        for (let i = 0; i < top; i++) {
+        for (let i = skip; i < top + skip; i++) {
             let method = methods[i];
+            method.index = i;
             if (!!method.group) {
                 let found = _.find(groups, {_id: method.group});
                 if (!!found) {
@@ -28,7 +31,16 @@ router.route('/methods')
             method.tags = tagIds;
             query.push(method);
         }
-        res.send(query);
+        let reqUrl = url.parse(req.baseUrl + req.route.path, true, false);
+        reqUrl.query['skip'] = (top + skip).toString();
+        reqUrl.query['top'] = top.toString();
+        delete reqUrl['search'];
+        let paylodad = {
+            $count: top,
+            $nexturl: url.format(reqUrl),
+            results: query
+        };
+        res.send(paylodad);
     })
     .post(function(req, res) {
         let method = req.body;

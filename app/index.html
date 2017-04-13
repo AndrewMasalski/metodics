@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
     <title>Каталог методик</title>
@@ -8,8 +8,9 @@
     <link type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link type="text/css" href="../node_modules/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-    <link type="text/css" href="../node_modules/ng-tags-input/build/ng-tags-input.css" rel="stylesheet" >
-    <link type="text/css" href="../node_modules/ng-tags-input/build/ng-tags-input.bootstrap.min.css" rel="stylesheet" >
+    <link type="text/css" href="../node_modules/ng-tags-input/build/ng-tags-input.css" rel="stylesheet">
+    <link type="text/css" href="../node_modules/ng-tags-input/build/ng-tags-input.bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="../node_modules/angular-block-ui/dist/angular-block-ui.min.css" rel="stylesheet">
     <script src="../node_modules/lodash/lodash.min.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -21,11 +22,13 @@
     <script src="../node_modules/angular-modal-service/dst/angular-modal-service.min.js"></script>
     <script src="../node_modules/angular-xeditable/dist/js/xeditable.js"></script>
     <script src="../node_modules/ng-tags-input/build/ng-tags-input.min.js"></script>
+    <script src="../node_modules/angular-block-ui/dist/angular-block-ui.min.js"></script>
 
 
     <script src="app.js"></script>
     <script src="services/authService.js"></script>
     <script src="services/apiService.js"></script>
+    <script src="services/blockService.js"></script>
     <script src="ctrl/mainCtrl.js"></script>
     <script src="ctrl/dashboardCtrl.js"></script>
     <script src="ctrl/usersCtrl.js"></script>
@@ -36,25 +39,28 @@
 
 <body>
 <div ng-app="Methods" ng-controller="mainCtrl">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <span class="navbar-brand">Каталог</span>
+    <div block-ui="blocker">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Каталог</span>
+                </div>
+                <ul class="nav navbar-nav" ng-show="isLoggedIn()">
+                    <li ui-sref-active="active" class="item"><a ui-sref="dashboard">Главная</a></li>
+                    <li ui-sref-active="active" class="item"><a ui-sref="groups">Разделы</a></li>
+                    <li ui-sref-active="active" class="item"><a ui-sref="tags">Тэги</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-show="isLoggedIn()">
+                    <li ui-sref-active="active" class="item"><a
+                            ui-sref="users({userName: user.username})">{{userInfo()}}</a></li>
+                    <li class="item"><a href ng-click="logout()">Выйти</a></li>
+                </ul>
             </div>
-            <ul class="nav navbar-nav" ng-show="isLoggedIn()">
-                <li ui-sref-active="active" class="item"><a ui-sref="dashboard">Главная</a></li>
-                <li ui-sref-active="active" class="item"><a ui-sref="groups">Разделы</a></li>
-                <li ui-sref-active="active" class="item"><a ui-sref="tags">Тэги</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right" ng-show="isLoggedIn()">
-                <li ui-sref-active="active" class="item"><a ui-sref="users({userName: user.username})">{{userInfo()}}</a></li>
-                <li class="item"><a href ng-click="logout()">Выйти</a></li>
-            </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="container-fluid">
-        <ui-view></ui-view>
+        <div class="container-fluid">
+            <ui-view></ui-view>
+        </div>
     </div>
 </div>
 

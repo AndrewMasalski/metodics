@@ -1,11 +1,13 @@
 angular.module('Methods')
-    .controller('groupsCtrl', function($scope, api) {
+    .controller('groupsCtrl', function($scope, api, block) {
         $scope.new = '';
         $scope.groups = [];
 
+        block.toggle();
         api.groups.all()
             .then(function(groups) {
                 $scope.groups = groups;
+                block.toggle();
             })
             .catch(onError);
 
@@ -34,5 +36,6 @@ angular.module('Methods')
 
         function onError(err) {
             $scope.error = err;
+            block.toggle();
         }
     });

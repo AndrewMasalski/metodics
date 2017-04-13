@@ -1,5 +1,5 @@
 angular.module('Methods')
-    .controller('mainCtrl', function($scope, $rootScope, $http, $state, auth) {
+    .controller('mainCtrl', function($scope, $rootScope, $http, $state, block,auth) {
         $scope.user = auth.getUser();
 
         $scope.userInfo = function() {
@@ -13,14 +13,17 @@ angular.module('Methods')
         };
 
         $scope.login = function() {
+            block.toggle();
             $scope.error = undefined;
             auth.signin($scope.user)
                 .then(function() {
                     console.log('auth success');
                     $state.go('dashboard');
+                    block.toggle();
                 })
                 .catch(function(err) {
                     $scope.error = err.message || err.data.message;
+                    block.toggle();
                 });
         };
 

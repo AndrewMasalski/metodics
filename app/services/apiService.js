@@ -5,10 +5,10 @@ angular.module('Methods')
             domain = domain || 'api';
             const server = host + domain + '/';
             return {
-                all: function() {
-                    return $http.get(server + name)
+                all: function(params) {
+                    return $http.get(server + name, {params: params})
                         .then(function(response) {
-                            return response.data;
+                            return response.data.results;
                         });
                 },
                 add: function(method) {
@@ -32,12 +32,23 @@ angular.module('Methods')
             }
         }
     })
-    .service('api', function($http, host, EntitySet) {
-
+    .service('api', function($http, $q, host, EntitySet) {
         this.users = new EntitySet('users', 'auth');
         this.methods = new EntitySet('methods');
         this.tags = new EntitySet('tags');
         this.groups = new EntitySet('groups');
+
+        this.loadAll = function() {
+            return $q.all([this.methods.all({skip: 0, top: 30}), this.groups.all(), this.tags.all()])
+                .then(function(res) {
+                    return {
+                        methods: res[0] || [],
+                        nexturl: res[0].$nexturl,
+                        groups: res[1] || [],
+                        tags: res[2] || []
+                    }
+                })
+        };
 
         this.login = function(user) {
             return $http.post(host + 'auth/login', user)

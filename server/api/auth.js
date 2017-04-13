@@ -21,7 +21,7 @@ router.route('/login')
 
 router.route('/users')
     .get(function(req, res) {
-        res.send(db.users.find());
+        res.send({results: db.users.find()});
     })
 
     .post(function(req, res) {
