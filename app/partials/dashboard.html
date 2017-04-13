@@ -7,7 +7,7 @@
     <div class="form-group">
         <label>Раздел</label>
         <select class="form-control" ng-model="filterState.group">
-            <option value="выберите группу"></option>
+            <option value="---">---</option>
             <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
         </select>
     </div>
@@ -34,7 +34,7 @@
 
 
 <hr/>
-<div ng-hide="methods.length == 0">
+<div ng-hide="methods.length == 0" id="results">
 <h4>{{resultsInfo}}</h4>
 <table class="table table-striped" infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
     <thead>

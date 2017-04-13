@@ -1,7 +1,7 @@
 angular.module('Methods')
-    .controller('dashboardCtrl', function($scope, $stateParams, ModalService, api, $q, block) {
+    .controller('dashboardCtrl', function($scope, $state, $stateParams, ModalService, api, $q, block) {
         $scope.filterState = {
-            group: $stateParams.group,
+            group: $stateParams.group || '---',
             tags: $stateParams.tag ? [$stateParams.tag] : []
         };
 
@@ -39,6 +39,14 @@ angular.module('Methods')
                     $scope.methods = res.results;
                     $scope.resultsInfo = 'Показано ' + $scope.methods.length + ' из ' + res.$count;
                     block.toggle();
+
+                    var el = document.getElementById('results');
+                    el.focus();
+                    var currentDocument = el.ownerDocument;
+                    var currentWindow = currentDocument.defaultView || currentDocument.parentWindow; // parentWindow is for IE8-
+                    var currentScrollTop = currentWindow.pageYOffset || currentDocument.documentElement.scrollTop || currentDocument.body.scrollTop || 0;
+                    var scrollToY = el.getBoundingClientRect().top + currentScrollTop;
+                    currentWindow.scrollTo(0, scrollToY);
                 })
                 .catch(function(err) {
                     $scope.next = undefined;
@@ -91,6 +99,9 @@ angular.module('Methods')
         function getSearchParams() {
             let searchParams = _.clone($scope.filterState);
             searchParams.tags = _.map($scope.filterState.tags, '_id').join(';');
+            if (searchParams.group === '---') {
+                searchParams.group = undefined;
+            }
             if (searchParams.tags.length === 0) {
                 searchParams.tags = undefined;
             }
