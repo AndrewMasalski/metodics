@@ -4,6 +4,7 @@ angular.module('Methods')
             group: $stateParams.group,
             tags: []
         };
+
         $scope.methods = [];
         $scope.groups = [];
         $scope.tags = [];
@@ -15,6 +16,10 @@ angular.module('Methods')
                 $scope.methods = res.methods;
                 $scope.groups = res.groups;
                 $scope.tags = res.tags;
+                let tagFromParam = _.find(res.tags, {_id: $stateParams.tag});
+                if (tagFromParam) {
+                    $scope.filterState.tags.push(tagFromParam);
+                }
                 block.toggle();
             })
             .catch(onError);
