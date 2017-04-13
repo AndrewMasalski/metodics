@@ -1,4 +1,13 @@
-angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngSanitize', 'ngAnimate', 'xeditable', 'ngTagsInput', 'ngTagCloud'])
+let ngmodules = [
+    'ui.router',
+    'ngCookies',
+    'angularModalService',
+    'ngSanitize',
+    'ngAnimate',
+    'xeditable',
+    'ngTagsInput'
+];
+angular.module('Methods', ngmodules)
     .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/dashboard");
 
@@ -29,7 +38,7 @@ angular.module('Methods', ['ui.router', 'ngCookies', 'angularModalService', 'ngS
                 controller: 'groupsCtrl'
             })
             .state('tags', {
-                url: "/tags",
+                url: "/tags/:id",
                 templateUrl: "partials/tags.html",
                 data: {requireLogin: true},
                 controller: 'tagsCtrl'
