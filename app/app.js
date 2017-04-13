@@ -25,7 +25,10 @@ angular.module('Methods', ngmodules)
                 controller: 'mainCtrl'
             })
             .state('dashboard', {
-                url: "/dashboard",
+                url: "/dashboard?group",
+                params: {
+                    group: null
+                },
                 templateUrl: "partials/dashboard.html",
                 data: {requireLogin: true},
                 controller: 'dashboardCtrl'

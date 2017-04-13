@@ -1,6 +1,9 @@
 angular.module('Methods')
-    .controller('dashboardCtrl', function($scope, ModalService, api, $q, block) {
-        $scope.filterState = {tags: []};
+    .controller('dashboardCtrl', function($scope, $stateParams, ModalService, api, $q, block) {
+        $scope.filterState = {
+            group: $stateParams.group,
+            tags: []
+        };
         $scope.methods = [];
         $scope.groups = [];
         $scope.tags = [];
