@@ -9,11 +9,6 @@
             <div class="modal-body">
                 <fieldset style="margin: 10px" ng-disabled="readOnly">
                     <form class="form-horizontal" name="methodForm" novalidate>
-                        <div class="form-group">
-                            <label>Код</label>
-                            <input type="text" name="code" class="form-control" ng-model="method.code">
-                        </div>
-
                         <div class="form-group"
                              ng-class="{ 'has-error' : methodForm.description.$invalid && !methodForm.description.$pristine }">
                             <label>Описание</label>
@@ -25,12 +20,19 @@
 
                         <div class="form-group">
                             <label>Тип</label>
-                            <input type="text" name="type" class="form-control" ng-model="method.type">
+                            <input type="text" name="type" class="form-control" ng-model="method.type" placeholder="рекомендация">
                         </div>
 
                         <div class="form-group">
                             <label>Год</label>
-                            <input type="text" name="type" class="form-control" ng-model="method.year">
+                            <input type="text" name="type" class="form-control" ng-model="method.year" placeholder="1980">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Раздел</label>
+                            <select name="group" id="group" class="form-control" ng-model="method.group._id">
+                                <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -41,15 +43,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Группа</label>
-                            <select name="group" id="group" class="form-control" ng-model="method.group._id">
-                                <option ng-repeat="option in groups" value="{{option._id}}">{{option.name}}</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label>Заметки</label>
-                            <input type="text" name="type" class="form-control" ng-model="method.notes">
+                            <textarea type="text" name="type" class="form-control" ng-model="method.notes"></textarea>
                         </div>
                     </form>
                 </fieldset>

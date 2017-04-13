@@ -49,6 +49,7 @@ angular.module('Methods')
         }
     })
     .service('api', function($http, $q, host, EntitySet) {
+        let api = this;
         this.users = new EntitySet('users', 'auth');
         this.methods = new EntitySet('methods');
         this.tags = new EntitySet('tags');
@@ -56,11 +57,12 @@ angular.module('Methods')
         function onError(err) { return err.data.message; }
 
         this.loadAll = function(params) {
-            return $q.all([this.methods.many(params), this.groups.many(), this.tags.many()])
+            return $q.all([api.methods.many(params), api.groups.many(), api.tags.many()])
                 .then(function(res) {
                     return {
                         methods: res[0].results || [],
                         next: res[0].$next,
+                        count: res[0].$count,
                         groups: res[1].results || [],
                         tags: res[2].results || []
                     }

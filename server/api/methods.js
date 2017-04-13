@@ -1,13 +1,43 @@
-var url = require('url');
 let _ = require('lodash');
 let express = require('express');
 
 let router = express.Router();
 
+function filterMethods(methods, req) {
+    return _.filter(methods, function(m) {
+        let matches = [];
+        let match;
+        if (req.query.tags) {
+            let tagIds = req.query.tags.split(';');
+            match = _.intersection(m.tags, tagIds).length > 0;
+            matches.push(match);
+        }
+        if (req.query.description) {
+            let notes = m.notes || '';
+            match = m.description.indexOf(req.query.description) >= 0 || notes.indexOf(req.query.description) >= 0;
+            matches.push(match);
+        }
+        if (req.query.type) {
+            match = (m.type || '').indexOf(req.query.type) >= 0;
+            matches.push(match);
+        }
+        if (req.query.year) {
+            match = (m.year || '').indexOf(req.query.year) >= 0;
+            matches.push(match);
+        }
+        return _.every(matches, function(m) { return m });
+    });
+}
+
 router.route('/methods')
     .get(function(req, res) {
         try {
-            let methods = db.methods.find();
+            let searchParams = {};
+            if (req.query.group) {
+                searchParams.group = req.query.group;
+            }
+            let methods = filterMethods(db.methods.find(searchParams), req);
+
             let groups = db.groups.find();
             let tags = db.tags.find();
             let skip = Number(req.query.skip || 0);
@@ -15,11 +45,6 @@ router.route('/methods')
             let query = [];
             for (let i = skip; i < top + skip && i < methods.length; i++) {
                 let method = methods[i];
-/*
-                if (method === undefined) {
-                    break;
-                }
-*/
                 method.index = i;
                 if (!!method.group) {
                     let found = _.find(groups, {_id: method.group});
@@ -38,11 +63,15 @@ router.route('/methods')
                 query.push(method);
             }
             let payload = {
-                $count: query.length,
+                $count: methods.length,
                 results: query
             };
             if (query.length === top && skip !== methods.length) {
-                payload.$next = {skip: top + skip, top: top};
+                payload.$next = {
+                    skip: top + skip,
+                    top: top,
+                    group: req.query.group
+                };
             }
             res.send(payload);
         } catch (e) {
