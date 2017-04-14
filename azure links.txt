@@ -1,0 +1,2 @@
+publish        	https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-nodejs-develop-deploy-app
+api				https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-nodejs-api-app

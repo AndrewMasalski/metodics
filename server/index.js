@@ -11,8 +11,9 @@ app.use('/api', require('./api/methods'));
 app.use('/api', require('./api/tags'));
 let groups = require('./api/groups');
 app.use('/api', groups);
-app.listen(3003, function() {
-    console.log('methods server is listening on port 3003!')
+let port = process.env.PORT || 30003;
+app.listen(port, function() {
+    console.log('api server is listening on port: ' + port)
 });
 
 
